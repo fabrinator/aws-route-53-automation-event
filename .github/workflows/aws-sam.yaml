@@ -11,11 +11,7 @@ jobs:
   aws_sam:
     name: AWS SAM
     uses: fabrinator/actions/.github/workflows/aws-sam.yaml@feature/oidc-auth
-#    with:
-#      TERRAFORM_VERSION: "1.9.2"
-#      AWS_REGION: "us-east-1"
-#      TF_WORKING_DIRECTORY: "."
-#      TF_EXTRA_OPTIONS: "--var-file=dev.fabririvas.com.tfvars"
-#      TF_WORKSPACE: "dev"
-#      TF_PROVIDER_AWS_ACCOUNT: 912008965710
+    with:
+      PYTHON_VERSION: 3.10.14
+      PROJECT_FOLDER: route-53-automation
     secrets: inherit
