@@ -6,13 +6,13 @@
       "EventSubscriptionArn": "arn:aws:sns:us-east-1:730335655220:Route53Automation-sns-topic:cc536ce3-eafd-400e-860f-fe4560fb429c",
       "Sns": {
         "Type": "Notification",
-        "MessageId": "574d922b-b6b0-5ade-9de4-cd3837b21054",
+        "MessageId": "aab3a191-49e5-585c-96c2-fe82d1ad422b",
         "TopicArn": "arn:aws:sns:us-east-1:730335655220:Route53Automation-sns-topic",
-        "Subject": "dafuck subject",
-        "Message": "dafuck body",
-        "Timestamp": "2024-07-18T20:44:50.986Z",
+        "Subject": "route53-record",
+        "Message": "{\n \"action\": \"add\",\n, \"record_name\": \"more.dev.fabririvas.com\",\n \"dns_zone\": \"dev.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.1\"\n}",
+        "Timestamp": "2024-07-18T22:24:08.970Z",
         "SignatureVersion": "1",
-        "Signature": "EndcrE0h88frFP81hqTYRRZ30F1sIDp4f2w9iq25RwgHDIxML3K2Oo/rLh/QEcg8YRzyEHq+hCQ76BN4LrCZ3XD5y0wFt4aNj+opKvW+s7XawzFFV5CVr1bjdFxB7jkH4iZToYXxI83QVn1IcKY7IH9hI73uEaYdOEnANBJykKn8OeOGF2mSDvZNsA50QlMF1l9B10DBFLCPtVsBF5oVLYojEqssFY/u0otYTLnf1xBAaL5qwN/l7HGyix3Cg76QX4lp9CHDykIMAn9WoX3IQ7QQCg8sSS7i9wRW22EB2aUtnvpSmy7lSMrWfKNOSWKcV0ytADOxaHX9/wTy1iu9fA==",
+        "Signature": "VPg3CR7WH3tOkE2hQshUirBbSFxCLhKy5/muqfqxQ0KqP4/TL66e3pczI93ZvYqZhfqbwafafZgiHBWIGnZveyzhv5EK7U1YDN/HJ6XQTd28rZ+qBIDaGyaxPMrNzboQlCumSmJRvoY71ipS2vTKO5rTNQ1mLBXGR1/iS238MxeKKPgf8JI85ag4FvGvz2zFZPcxM5+jl+1CCG4a4mJYiFZu7JeYj3wvCgchsQfaIQvdTaeQYL2UwkKxBBMje+X+EVMygdRREv0Ds8EWFQtEIwPtk8O0EpVXp2WIIxiyKdNCdB9YDt6HYGRlKHiLphR7ys6lfMpKYrcRJi4V3ZSjEg==",
         "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-60eadc530605d63b8e62a523676ef735.pem",
         "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:730335655220:Route53Automation-sns-topic:cc536ce3-eafd-400e-860f-fe4560fb429c",
         "MessageAttributes": {

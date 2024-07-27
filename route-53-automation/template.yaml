@@ -1,0 +1,137 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  route-53-automation
+Parameters:
+  AppName:
+    Type: String
+    Default: "Route53Automation"
+    Description: "Application Name"
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+#  AllAwsAccounts:
+#    Type: CommaDelimitedList
+#    Default: "519776006908,621897290135,912008965710,136273067277,730335655220"
+  AllArns:
+    Type: CommaDelimitedList
+    Default: "arn:aws:iam::730335655220:role/service-role/Route53LambdaRole, arn:aws:iam::730335655225:role/service-role/Route53LambdaRole"
+
+
+Mappings:
+  EnvironmentMap:
+    dev:
+      AccountRoute53: "730335655220"
+      HostedZoneId: "Z0977335579JSMRM5GSU"
+    prod:
+      AccountRoute53: "912008965710"
+      HostedZoneId: "Z10211583AH0PU25Y0Q7M"
+
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+#    Tracing: Active
+    # You can add LoggingConfig parameters such as the Logformat, Log Group, and SystemLogLevel or ApplicationLogLevel. Learn more here https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-function-loggingconfig.
+    LoggingConfig:
+      LogFormat: JSON
+  Api:
+    TracingEnabled: true
+Resources:
+  Route53Function:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.10
+      Role: !GetAtt Route53LambdaExecutionRole.Arn
+      Architectures:
+      - x86_64
+      Events:
+        Route53Topic:
+          Type: SNS
+          Properties:
+            Topic: !Ref Route53Topic
+  Route53Topic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub "${AppName}-sns-topic"
+  Route53SNSTopicPolicy:
+    Type: 'AWS::SNS::TopicPolicy'
+    Properties:
+      Topics:
+        - !Ref Route53Topic
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              AWS: !GetAtt Route53LambdaExecutionRole.Arn
+#              AWS: !Split [ "," , "arn:aws:iam::730335655220:role/service-role/Route53LambdaRole, arn:aws:iam::730335655225:role/service-role/Route53LambdaRole" ] #TODO
+            Action: 'SNS:Publish'
+            Resource: !Ref Route53Topic
+  Route53LambdaExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub "${AppName}-role"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'Route53ChangeResourceRecordSetsPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'route53:ChangeResourceRecordSets'
+                  - "route53:GetHostedZone"
+                  - "route53:ListResourceRecordSets"
+                Resource: !Sub
+                  - 'arn:aws:route53:::hostedzone/${HostedZoneId}'
+                  - HostedZoneId: !FindInMap [ EnvironmentMap, !Ref Environment, HostedZoneId ]
+        - PolicyName: 'Route53AllowListingHostedZones'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - "route53:ListHostedZonesByName"
+                  - "route53:ListHostedZones"
+                Resource: "*"
+        - PolicyName: 'LambdaBasicExecutionPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  Route53Function:
+    Description: Route53Lambda Function ARN
+    Value: !GetAtt Route53Function.Arn
+  Route53FunctionIamRole:
+    Description: Implicit IAM Role created for Route53 function
+    Value: !GetAtt Route53LambdaExecutionRole.Arn
+  SNSTopicArn:
+    Description: "ARN of the SNS Topic"
+    Value: !Ref Route53Topic
+  HostedZoneId:
+    Description: "The Hosted Zone ID"
+    Value: !FindInMap [EnvironmentMap, !Ref Environment, HostedZoneId]

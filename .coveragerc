@@ -1,0 +1,4 @@
+[run]
+source = route-53-automation/src
+[report]
+skip_empty = True
