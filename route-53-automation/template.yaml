@@ -25,9 +25,9 @@ Mappings:
   EnvironmentMap:
     dev:
       AccountRoute53: "730335655220"
-      HostedZoneId: "Z0977335579JSMRM5GSU"
+      HostedZoneId: "Z05263587JS480UZIEY0"
     prod:
-      AccountRoute53: "912008965710"
+      AccountRoute53: "730335655220"
       HostedZoneId: "Z10211583AH0PU25Y0Q7M"
 
 
