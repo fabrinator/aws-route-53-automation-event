@@ -14,5 +14,6 @@ jobs:
     with:
       PYTHON_VERSION: 3.10.14
       PROJECT_FOLDER: route-53-automation
-      AWS_ACCOUNT: 912008965710
+      AWS_ACCOUNT: 730335655220
+      AWS_DEPLOY_PROD: "['730335655220']"
     secrets: inherit

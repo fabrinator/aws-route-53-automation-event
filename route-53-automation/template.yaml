@@ -46,6 +46,7 @@ Resources:
   Route53Function:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      FunctionName: !Sub "${AppName}${Environment}"
       CodeUri: src/
       Handler: app.lambda_handler
       Runtime: python3.10
@@ -60,7 +61,7 @@ Resources:
   Route53Topic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: !Sub "${AppName}-sns-topic"
+      TopicName: !Sub "${AppName}${Environment}-sns-topic"
   Route53SNSTopicPolicy:
     Type: 'AWS::SNS::TopicPolicy'
     Properties:
@@ -78,7 +79,7 @@ Resources:
   Route53LambdaExecutionRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub "${AppName}-role"
+      RoleName: !Sub "${AppName}${Environment}-role"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
