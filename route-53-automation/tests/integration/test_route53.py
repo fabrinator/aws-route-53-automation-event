@@ -36,7 +36,7 @@ class TestRoute53:
         client_r53 = boto3.client("route53")
         response = client_sns.publish(
             TopicArn=outputs_cloudformation["SNSTopicArn"],
-            Message="{\n \"action\": \"add\",\n \"record_name\": \"integrationtest.dev.fabririvas.com\",\n \"dns_zone\": \"dev.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.2\"\n}",
+            Message="{\n \"action\": \"create\",\n \"record_name\": \"integrationtest.dev.fabririvas.com\",\n \"dns_zone\": \"dev.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.2\"\n}",
             Subject="Integration Test"
         )
         print(response)

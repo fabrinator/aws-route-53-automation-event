@@ -61,7 +61,7 @@ def lambda_handler(event, context):
     action = message.get("action")
     zone_id = get_hosted_zone_id(dns_zone)
     if zone_id:
-        if action == "add" or action == "update":
+        if action == "create" or action == "update":
             return change_resource_record(message["record_name"], message["record_type"], message["record_value"], zone_id, "UPSERT")
         elif action == "delete":
             return change_resource_record(message["record_name"], message["record_type"], message["record_value"], zone_id, "DELETE")
