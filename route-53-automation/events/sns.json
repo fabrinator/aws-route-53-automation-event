@@ -1,0 +1,67 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:us-east-1:730335655220:Route53Automation-sns-topic:cc536ce3-eafd-400e-860f-fe4560fb429c",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "aab3a191-49e5-585c-96c2-fe82d1ad422b",
+        "TopicArn": "arn:aws:sns:us-east-1:730335655220:Route53Automation-sns-topic",
+        "Subject": "route53-record",
+        "Message": "{\n \"action\": \"add\",\n, \"record_name\": \"more.dev.fabririvas.com\",\n \"dns_zone\": \"dev.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.1\"\n}",
+        "Timestamp": "2024-07-18T22:24:08.970Z",
+        "SignatureVersion": "1",
+        "Signature": "VPg3CR7WH3tOkE2hQshUirBbSFxCLhKy5/muqfqxQ0KqP4/TL66e3pczI93ZvYqZhfqbwafafZgiHBWIGnZveyzhv5EK7U1YDN/HJ6XQTd28rZ+qBIDaGyaxPMrNzboQlCumSmJRvoY71ipS2vTKO5rTNQ1mLBXGR1/iS238MxeKKPgf8JI85ag4FvGvz2zFZPcxM5+jl+1CCG4a4mJYiFZu7JeYj3wvCgchsQfaIQvdTaeQYL2UwkKxBBMje+X+EVMygdRREv0Ds8EWFQtEIwPtk8O0EpVXp2WIIxiyKdNCdB9YDt6HYGRlKHiLphR7ys6lfMpKYrcRJi4V3ZSjEg==",
+        "SigningCertUrl": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-60eadc530605d63b8e62a523676ef735.pem",
+        "UnsubscribeUrl": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:730335655220:Route53Automation-sns-topic:cc536ce3-eafd-400e-860f-fe4560fb429c",
+        "MessageAttributes": {
+          "AWS.SNS.MOBILE.MPNS.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.BAIDU.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.MACOS_SANDBOX.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.MACOS.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.GCM.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.ADM.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.APNS.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.APNS_SANDBOX.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.APNS_VOIP_SANDBOX.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.APNS_VOIP.TTL": {
+            "Type": "String",
+            "Value": "300"
+          },
+          "AWS.SNS.MOBILE.WNS.TTL": {
+            "Type": "String",
+            "Value": "300"
+          }
+        }
+      }
+    }
+  ]
+}
