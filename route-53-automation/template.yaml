@@ -31,7 +31,7 @@ Mappings:
     prod:
       AccountRoute53: "730335655220"
       HostedZoneId: "Z10211583AH0PU25Y0Q7M"
-      AllArns: "arn:aws:iam::912008965710:role/aws-route-53-automation-relay,arn:aws:iam::519776006908:root"
+      AllArns: "arn:aws:iam::136273067277:role/aws-route-53-automation-relay,arn:aws:iam::730335655220:role/aws-route-53-automation-relay"
 
 
 
