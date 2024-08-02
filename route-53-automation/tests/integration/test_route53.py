@@ -1,4 +1,5 @@
 import os, boto3, pytest, time
+from botocore.config import Config
 
 class TestRoute53:
 
@@ -40,7 +41,7 @@ class TestRoute53:
             Subject="Integration Test"
         )
         print(response)
-        time.sleep(1)
+        time.sleep(2)
         record_sets = client_r53.list_resource_record_sets(HostedZoneId=outputs_cloudformation["HostedZoneId"])
         records = record_sets['ResourceRecordSets']
         assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
@@ -58,6 +59,7 @@ class TestRoute53:
         print(response)
         time.sleep(1)
         record_sets = client_r53.list_resource_record_sets(HostedZoneId=outputs_cloudformation["HostedZoneId"])
+        print(record_sets)
         records = [record["Name"] for record in record_sets['ResourceRecordSets']]
         assert "integrationtest.dev.fabririvas.com." not in records
 
