@@ -40,7 +40,7 @@ class TestRoute53:
             Subject="Integration Test"
         )
         print(response)
-        time.sleep(1)
+        time.sleep(2)
         record_sets = client_r53.list_resource_record_sets(HostedZoneId=outputs_cloudformation["HostedZoneId"])
         records = record_sets['ResourceRecordSets']
         assert response["ResponseMetadata"]["HTTPStatusCode"] == 200

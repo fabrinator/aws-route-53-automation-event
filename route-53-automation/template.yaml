@@ -16,18 +16,19 @@ Parameters:
 #  AllAwsAccounts:
 #    Type: CommaDelimitedList
 #    Default: "519776006908,621897290135,912008965710,136273067277,730335655220"
-  AllArns:
-    Type: CommaDelimitedList
-    Default: "arn:aws:iam::730335655220:role/service-role/Route53LambdaRole, arn:aws:iam::730335655225:role/service-role/Route53LambdaRole"
+
+#  AllArns:
+#    Type: CommaDelimitedList
+#    Default: "arn:aws:iam::730335655220:role/service-role/Route53LambdaRole, arn:aws:iam::730335655225:role/service-role/Route53LambdaRole"
 
 
 Mappings:
   EnvironmentMap:
     dev:
       AccountRoute53: "730335655220"
-      HostedZoneId: "Z0977335579JSMRM5GSU"
+      HostedZoneId: "Z05263587JS480UZIEY0"
     prod:
-      AccountRoute53: "912008965710"
+      AccountRoute53: "730335655220"
       HostedZoneId: "Z10211583AH0PU25Y0Q7M"
 
 
@@ -46,6 +47,7 @@ Resources:
   Route53Function:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      FunctionName: !Sub "${AppName}-${Environment}"
       CodeUri: src/
       Handler: app.lambda_handler
       Runtime: python3.10
@@ -60,7 +62,7 @@ Resources:
   Route53Topic:
     Type: AWS::SNS::Topic
     Properties:
-      TopicName: !Sub "${AppName}-sns-topic"
+      TopicName: !Sub "${AppName}-${Environment}-sns-topic"
   Route53SNSTopicPolicy:
     Type: 'AWS::SNS::TopicPolicy'
     Properties:
@@ -71,14 +73,13 @@ Resources:
         Statement:
           - Effect: 'Allow'
             Principal:
-              AWS: !GetAtt Route53LambdaExecutionRole.Arn
-#              AWS: !Split [ "," , "arn:aws:iam::730335655220:role/service-role/Route53LambdaRole, arn:aws:iam::730335655225:role/service-role/Route53LambdaRole" ] #TODO
+              AWS: !Split [ "," , !Ref AllArns]
             Action: 'SNS:Publish'
             Resource: !Ref Route53Topic
   Route53LambdaExecutionRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !Sub "${AppName}-role"
+      RoleName: !Sub "${AppName}-${Environment}-role"
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
