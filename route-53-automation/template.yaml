@@ -17,9 +17,9 @@ Parameters:
 #    Type: CommaDelimitedList
 #    Default: "519776006908,621897290135,912008965710,136273067277,730335655220"
 
-#  AllArns:
-#    Type: CommaDelimitedList
-#    Default: "arn:aws:iam::730335655220:role/service-role/Route53LambdaRole, arn:aws:iam::730335655225:role/service-role/Route53LambdaRole"
+  AllArns:
+    Type: String
+    Default: "arn:aws:iam::912008965710:role/aws-route-53-automation-relay,arn:aws:iam::519776006908:root"
 
 
 Mappings:
