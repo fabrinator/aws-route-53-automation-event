@@ -17,9 +17,9 @@ Parameters:
 #    Type: CommaDelimitedList
 #    Default: "519776006908,621897290135,912008965710,136273067277,730335655220"
 
-  AllArns:
-    Type: String
-    Default: "arn:aws:iam::912008965710:role/aws-route-53-automation-relay,arn:aws:iam::519776006908:root"
+#  AllArns:
+#    Type: String
+#    Default: "arn:aws:iam::912008965710:role/aws-route-53-automation-relay,arn:aws:iam::519776006908:root"
 
 
 Mappings:
@@ -27,9 +27,12 @@ Mappings:
     dev:
       AccountRoute53: "730335655220"
       HostedZoneId: "Z05263587JS480UZIEY0"
+      AllArns: "arn:aws:iam::912008965710:role/aws-route-53-automation-relay,arn:aws:iam::519776006908:root"
     prod:
       AccountRoute53: "730335655220"
       HostedZoneId: "Z10211583AH0PU25Y0Q7M"
+      AllArns: "arn:aws:iam::912008965710:role/aws-route-53-automation-relay,arn:aws:iam::519776006908:root"
+
 
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
@@ -73,7 +76,7 @@ Resources:
         Statement:
           - Effect: 'Allow'
             Principal:
-              AWS: !Split [ "," , !Ref AllArns]
+              AWS: !Split [ "," , !FindInMap [ EnvironmentMap, !Ref Environment, AllArns ]]
             Action: 'SNS:Publish'
             Resource: !Ref Route53Topic
   Route53LambdaExecutionRole:
