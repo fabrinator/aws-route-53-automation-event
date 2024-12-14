@@ -31,7 +31,7 @@ def test_lambda_handler_create(create_dns_zone):
     conn = boto3.client("route53")
     zoneId = create_dns_zone
     sns_event = sns_json_file()
-    sns_event["Records"][0]["Sns"]["Message"] = "{\n \"action\": \"add\",\n \"record_name\": \"record.unittest.fabririvas.com\",\n \"dns_zone\": \"unittest.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.1\"\n}"
+    sns_event["Records"][0]["Sns"]["Message"] = "{\n \"action\": \"create\",\n \"record_name\": \"record.unittest.fabririvas.com\",\n \"dns_zone\": \"unittest.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.1\"\n}"
     ret = app.lambda_handler(sns_event, "")
     record_sets = conn.list_resource_record_sets(HostedZoneId=zoneId)
     records = record_sets['ResourceRecordSets']
@@ -43,7 +43,7 @@ def test_lambda_handler_create(create_dns_zone):
 @mock_aws
 def test_lambda_handler_host_zone_not_exists(create_dns_zone):
     sns_event = sns_json_file()
-    sns_event["Records"][0]["Sns"]["Message"] = "{\n \"action\": \"add\",\n \"record_name\": \"record.nodomain.fabririvas.com\",\n \"dns_zone\": \"nodomain.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.1\"\n}"
+    sns_event["Records"][0]["Sns"]["Message"] = "{\n \"action\": \"create\",\n \"record_name\": \"record.nodomain.fabririvas.com\",\n \"dns_zone\": \"nodomain.fabririvas.com\",\n  \"record_type\": \"A\",\n  \"record_value\": \"10.0.0.1\"\n}"
     ret = app.lambda_handler(sns_event, "")
     body = json.loads(ret["body"])
     assert ret["statusCode"] == 500
